@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { FcBullish } from 'react-icons/fc'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../lib/constants'
@@ -37,15 +37,25 @@ export default function Sidebar() {
 }
 
 function SidebarLink({ link }) {
-	const { pathname } = useLocation()
+	const { pathname } = useLocation();
+	const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
+	const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
 
+	useEffect(() => {
+		localStorage.setItem('sidebar-expanded', sidebarExpanded);
+		if (sidebarExpanded) {
+		  document.querySelector('body').classList.add('sidebar-expanded');
+		} else {
+		  document.querySelector('body').classList.remove('sidebar-expanded');
+		}
+	  }, [sidebarExpanded]);
 	return (
-		<Link
+		<NavLink
 			to={link.path}
 			className={classNames(pathname === link.path ? 'bg-neutral-700 text-white' : 'text-neutral-400', linkClass)}
 		>
 			<span className="text-xl">{link.icon}</span>
 			{link.label}
-		</Link>
+		</NavLink>
 	)
 }
