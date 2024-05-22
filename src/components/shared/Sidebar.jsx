@@ -5,7 +5,7 @@ import { FcBullish } from 'react-icons/fc'
 import { HiOutlineLogout } from 'react-icons/hi'
 import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../lib/constants'
 import SidebarLinkGroup from './SidebarLinkGroup';
-
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 const linkClass =
 	'flex items-center gap-2 font-light px-3 py-2 hover:bg-neutral-700 hover:no-underline active:bg-neutral-600 rounded-sm text-base'
 
@@ -59,7 +59,7 @@ function SidebarLink({ link }) {
                 {link.children && (
                     <div className="flex shrink-0 ml-2">
                         <span className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400">
-                            {isExpanded ? '-' : '+'}
+                            {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
                         </span>
                     </div>
                 )}
