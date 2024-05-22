@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
+    "@windmill/react-ui": "^0.6.0",
     "autoprefixer": "^10.4.19",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
