@@ -37,25 +37,50 @@ export default function Sidebar() {
 }
 
 function SidebarLink({ link }) {
-	const { pathname } = useLocation();
-	const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
-	const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
+    const { pathname } = useLocation();
+    const [isExpanded, setIsExpanded] = useState(false);
 
-	useEffect(() => {
-		localStorage.setItem('sidebar-expanded', sidebarExpanded);
-		if (sidebarExpanded) {
-		  document.querySelector('body').classList.add('sidebar-expanded');
-		} else {
-		  document.querySelector('body').classList.remove('sidebar-expanded');
-		}
-	  }, [sidebarExpanded]);
-	return (
-		<NavLink
-			to={link.path}
-			className={classNames(pathname === link.path ? 'bg-neutral-700 text-white' : 'text-neutral-400', linkClass)}
-		>
-			<span className="text-xl">{link.icon}</span>
-			{link.label}
-		</NavLink>
-	)
+    const toggleExpand = () => {
+        setIsExpanded(!isExpanded);
+    };
+
+    const classPath = classNames(
+        pathname === link.path ? 'bg-neutral-700 text-white' : 'text-neutral-400',
+        linkClass
+    );
+
+    return (
+        <div>
+            <div className={classPath + " flex items-center justify-between"} onClick={toggleExpand}>
+                <div className="flex items-center">
+                    <span className="text-xl">{link.icon}</span>
+                    <span>{link.label}</span>
+                </div>
+                {link.children && (
+                    <div className="flex shrink-0 ml-2">
+                        <span className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400">
+                            {isExpanded ? '-' : '+'}
+                        </span>
+                    </div>
+                )}
+            </div>
+            {isExpanded && link.children && (
+                <div className="ml-4">
+                    {link.children.map((child) => (
+                        <NavLink
+                            key={child.key}
+                            to={child.path}
+                            className={classNames(
+                                pathname === child.path ? 'bg-neutral-700 text-white' : 'text-neutral-400',
+                                linkClass
+                            )}
+                        >
+                            <span className="text-xl">{child.icon}</span>
+                            {child.label}
+                        </NavLink>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 }

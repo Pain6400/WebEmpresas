@@ -20,7 +20,21 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		key: 'products',
 		label: 'Products',
 		path: '/products',
-		icon: <HiOutlineCube />
+		icon: <HiOutlineCube />,
+		children: [
+			{
+				key: 'products',
+				label: 'Products',
+				path: '/products',
+				icon: <HiOutlineCube />,
+			},
+			{
+				key: 'orders',
+				label: 'Orders',
+				path: '/orders',
+				icon: <HiOutlineShoppingCart />
+			},
+		]
 	},
 	{
 		key: 'orders',
