@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Layout from './components/shared/Layout'
 import Register from './pages/Register'
@@ -7,16 +7,16 @@ import Products from './pages/Products'
 import Login from './pages/Account/login'
 
 function App() {
-
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const handleLogin = () => {
-        setIsAuthenticated(false);
+        setIsAuthenticated(true);
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
     };
+
     return (
         <Router>
             <Routes>
@@ -30,11 +30,11 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route
                     path="/login"
-                    element={isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/" />}
+                    element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/" />}
                 />
             </Routes>
         </Router>
-    )
+    );
 }
 
-export default App
+export default App;
