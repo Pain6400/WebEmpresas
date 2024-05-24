@@ -59,7 +59,7 @@ function Login({ onLogin }) {
               <Button className="mt-4" block layout="outline" onClick={handleLogin}>
                 Log in
               </Button>
-
+              {error && <p>{error}</p>}
               <hr className="my-8" />
 
               <Button block layout="outline">
