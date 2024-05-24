@@ -1,5 +1,8 @@
+import React, { useEffect } from 'react'
+import api from '../components/axiosConfig';
 
-export default function Products() {
+const Products = () => {
+
     return (
         <div>
             <div className="border-solid border-4 border-light-blue-500">test</div>
@@ -10,3 +13,5 @@ export default function Products() {
         </div>
     )
 }
+
+export default Products;
