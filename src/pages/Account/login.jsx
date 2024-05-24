@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from '../../components/axiosConfig';
 import { Button, Input, Label } from '@windmill/react-ui';
 import { useNavigate, NavLink } from 'react-router-dom';
 import ImageLight from '../../assets/img/login-office.jpeg'
@@ -6,10 +7,22 @@ import ImageDark from '../../assets/img/login-office-dark.jpeg'
 import { FaTwitter, FaGithub } from 'react-icons/fa';
 function Login({ onLogin }) {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    onLogin();
-    navigate('/');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('/login', { username, password });
+      localStorage.setItem('token', response.data.token);
+      onLogin();
+      navigate('/');
+    } catch (err) {
+      console.error('Error logging in:', err);
+      setError(err.response ? err.response.data.message : 'An unexpected error occurred.');
+    }
   };
 
   return (
@@ -35,12 +48,12 @@ function Login({ onLogin }) {
               <h1 className="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Login</h1>
               <Label>
                 <span>Email</span>
-                <Input className="mt-1" type="email" placeholder="john@doe.com" />
+                <Input className="mt-1" type="email" placeholder="john@doe.com" value={username} onChange={(e) => setUsername(e.target.value)} />
               </Label>
 
               <Label className="mt-4">
                 <span>Password</span>
-                <Input className="mt-1" type="password" placeholder="***************" />
+                <Input className="mt-1" type="password" placeholder="***************" value={password} onChange={(e) => setPassword(e.target.value)} />
               </Label>
 
               <Button className="mt-4" block layout="outline" onClick={handleLogin}>
